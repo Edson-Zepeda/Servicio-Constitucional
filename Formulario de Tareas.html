@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Texto</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(120deg, #f0f4f8 0%, #d9e7fa 100%);
+      margin: 0;
+      padding: 1;
+      color: #222;
+    }
+
+    header, nav, footer {
+      background: #2563eb;
+      color: #fff;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 2rem;
+    }
+
+    h1, h2, h3 {
+      color: #2563eb;
+      margin-top: 0;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #1e40af;
+      text-decoration: underline;
+    }
+
+    button, input[type="submit"] {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover, input[type="submit"]:hover {
+      background: #1e40af;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #f3f6fb;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.05);
+      margin-bottom: 1.5rem;
+    }
+
+    #contenedor {
+      margin-bottom: 20px;
+    }
+    #textoIngresado {
+      margin-top: 15px;
+      padding: 10px;
+      border: 2px solid #000000;
+      min-height: 50px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
+      header, nav, footer {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mi Aplicación</h1>
+  </header>
+  <main>
+    <h2>Formulario de Texto</h2>
+    <div id="contenedor">
+      <input type="text" id="entrada" placeholder="ingresa texto...">
+      <button onclick="leerTexto()">Leer</button>
+      <button onclick="borrarTexto()">Borrar</button>
+    </div>
+
+    <div id="textoIngresado"></div>
+  </main>
+  <footer>
+    <p>© 2023 Mi Aplicación. Todos los derechos reservados.</p>
+  </footer>
+  
+  <script>
+    function leerTexto() {
+      const input = document.getElementById("entrada");
+      const contenedorTexto = document.getElementById("textoIngresado");
+      if (input.value.trim() !== "") {
+        const nuevoParrafo = document.createElement("p");
+        nuevoParrafo.textContent = input.value;
+        contenedorTexto.appendChild(nuevoParrafo);
+        input.value = "";
+        input.focus();
+        // Guardar el contenido en localStorage
+        const contenido = document.getElementById("textoIngresado").innerHTML;
+        localStorage.setItem("textoIngresado", contenido);
+      }
+    }
+    
+    window.onload = function () { 
+      const historial = localStorage.getItem("textoIngresado");
+      if (historial) {
+        document.getElementById("textoIngresado").innerHTML = historial;
+      }
+    };
+
+
+    function borrarTexto() {
+      localStorage.removeItem("textoIngresado");
+      document.getElementById("textoIngresado").innerHTML = "";
+      alert("Texto borrado ❌");
+    }
+  </script>
+</body>
+</html>
