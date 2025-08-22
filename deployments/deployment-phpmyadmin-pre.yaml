@@ -1,0 +1,6 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-changeme #Only change the word "changeme"
+  namespace: changeme-pre #NAMESPACE
+
