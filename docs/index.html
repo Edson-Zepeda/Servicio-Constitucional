@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="img/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <style>
+    <style>
     body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(120deg,#f0f4f8 0%,#d9e7fa 100%);margin:0;padding:1rem;color:#222}
     header,footer{background:#2563eb;color:#fff;padding:1.2rem 2rem;text-align:center;border-radius:0 0 16px 16px;box-shadow:0 2px 8px rgba(37,99,235,.08)}
     main{max-width:800px;margin:2rem auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.07);padding:2rem}
@@ -132,9 +132,7 @@
   <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(r => console.log('SW listo', r.scope))
-        .catch(console.error);
+      navigator.serviceWorker.register('./sw.js', { scope: './' });
     });
   }
   </script>
