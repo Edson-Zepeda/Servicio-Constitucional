@@ -52,6 +52,73 @@ if ('serviceWorker' in navigator) {
   </main>
 
   <footer><p>© 2023 Mi Aplicación. Todos los derechos reservados.</p></footer>
+  <script>
+    const entrada = document.getElementById("entrada");
+    const lista = document.getElementById("lista");
+    const btnLeer = document.getElementById("btnLeer");
+    const btnBorrarTodo = document.getElementById("btnBorrarTodo");
+
+    // estado en memoria + persistencia
+    let tareas = JSON.parse(localStorage.getItem("tareas") || "[]");
+
+    function guardar() {
+      localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
+
+    function render() {
+      lista.innerHTML = "";
+      tareas.forEach((t, idx) => {
+        const li = document.createElement("li");
+        li.className = "item";
+        li.innerHTML = `
+          <span class="txt">${t}</span>
+          <button class="del" data-i="${idx}">Eliminar</button>
+        `;
+        lista.appendChild(li);
+      });
+    }
+
+    function agregar() {
+      const val = entrada.value.trim();
+      if (!val) return;
+      tareas.push(val);
+      guardar();
+      render();
+      entrada.value = "";
+      entrada.focus();
+    }
+
+    // borrar una tarea (event delegation)
+    lista.addEventListener("click", (e) => {
+      if (e.target.classList.contains("del")) {
+        const i = Number(e.target.getAttribute("data-i"));
+        tareas.splice(i, 1);
+        guardar();
+        render();
+      }
+    });
+
+    // borrar todas
+    function borrarTodo() {
+      if (!tareas.length) return;
+      if (confirm("¿Borrar TODAS las tareas?")) {
+        tareas = [];
+        guardar();
+        render();
+        alert("Texto borrado ❌");
+      }
+    }
+
+    // eventos
+    btnLeer.addEventListener("click", agregar);
+    entrada.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") agregar();
+    });
+    btnBorrarTodo.addEventListener("click", borrarTodo);
+
+    // al cargar
+    render();
+  </script>
 
   <script>
   if ('serviceWorker' in navigator) {
