@@ -1,0 +1,5 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proyecto-changeme #Only change "changeme"
+  namespace: changeme-pre #NAMESPACE

@@ -12,7 +12,10 @@ ENV USERD=user
 ENV PASSD=psswrd-proyecto-user!
 ENV SIMPLE=simple-proyecto
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e0b6ec27e06db45e08f33822ed5d984343d0b13
 # Copiar archivos al contenedor
 RUN mkdir -p /var/www/proyecto/public_content
 RUN mkdir -p /var/www/private_content

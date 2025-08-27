@@ -1,0 +1,11 @@
+name: CI/CD (pre-production)
+
+on:
+  push:
+    branches:
+      - pre-none
+  pull_request:
+    branches:
+      - pre-none
+    types: [closed]
+
