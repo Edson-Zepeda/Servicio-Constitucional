@@ -24,19 +24,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  font-size: 18px !important;
 }
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+input {
+  font-size: 14px !important;
 }
-
 button {
-  border-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -75,4 +73,146 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+
+.completada{
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+li{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+li button{
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.encabezado{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.encabezado h1{
+    font-size: 120px;
+    text-transform: uppercase;
+
+}
+
+.app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;   /* elementos en columna */
+  align-items: center;      /* centra horizontal */
+  justify-content: flex-start; /* empieza desde arriba */
+  min-height: 100vh;        /* ocupa toda la pantalla */
+  padding-top: 50px;        /* deja espacio arriba */
+}
+
+.nueva-tarea {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.nueva-tarea input {
+  display: flex;
+  flex:1;
+  background-color: #323235;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: none;
+  border: none;
+  width: 500px;
+  padding-left: 20px;
+  font-size: 12px;
+}
+
+.app input[type="checkbox"]{
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.87);
+  outline: none;
+  background-color: #1a1a1a00;
+  accent-color: #646cff;
+  cursor: pointer;
+  position: relative;
+  display: flex;               /* convierte en contenedor flex */
+  align-items: center;         /* centra verticalmente */
+  justify-content: center; 
+}
+.app input[type="checkbox"]:checked {
+  background-color: #4c74af00;
+}
+
+/* Opcional: dibujar un "✓" */
+.app input[type="checkbox"]:checked::after {
+  content: "✓"; 
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 12px;
+  position: static;
+}
+
+/* La fila completa: una sola “pastilla” */
+.app li{
+  display: grid;
+  grid-template-columns: 1fr auto;   /* contenido | botón */
+  background: #303035;               /* fondo ÚNICO de toda la fila */
+  border-radius: 12px;
+  overflow: hidden;                   /* recorta esquinas internas */
+  margin-bottom: 10px;
+}
+
+/* Contenido: sin fondo propio, solo padding */
+.tarea-contenido{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;                /* define la altura de la fila */
+}
+
+/* Botón: se pega sin separación y se estira a la MISMA altura */
+.btn-x{
+  background: #171717;               /* contraste, sin crear ranura */
+  color: #fff;
+  border: 0;
+  margin: 0;                          /* evita huecos por margen */
+  padding: 8px;                    /* solo ancho; altura la da la fila */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* (por si había restos) evita que otras reglas metan fondos separados */
+.tarea-contenido, .btn-x { box-sizing: border-box; }
+
+.instrucciones {
+  background-color: #242424;
+  opacity: 0.9;
+  border-radius: 12px;
+  box-shadow: #111111 0px 10px 20px -10px;
+}
+.nueva-tarea, p {
+  text-align: center;
+}
+
+ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra los <li> */
+  padding: 0;
+}
+
+ul li{
+  width: 90%;
 }
