@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
     <link rel="manifest" href="./manifest.webmanifest">
-  <meta name="theme-color" content="#121212">
+    <base href="/Servicio-Constitucional/">
+    <link rel="manifest" href="/Servicio-Constitucional/manifest.webmanifest">
+    <meta name="theme-color" content="#121212">
 </head>
   <body>
     <!-- 👇 Aquí React va a montar todo -->
@@ -15,12 +17,12 @@
     <script type="module" src="/src/main.jsx"></script>
   
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('./service-worker.js')
-        .catch(console.error);
-    });
-  }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/Servicio-Constitucional/service-worker.js', { scope: '/Servicio-Constitucional/' })
+      .catch(console.error);
+  });
+}
 </script>
 
 </body>
