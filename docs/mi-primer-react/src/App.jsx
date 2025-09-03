@@ -80,7 +80,7 @@ function toggleTarea(id) {
         </>
       )}
     </div>
-  </div>
+  </div>    
   );
 }
 export default Aplicacion;
