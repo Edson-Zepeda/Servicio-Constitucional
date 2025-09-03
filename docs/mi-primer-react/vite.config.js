@@ -23,5 +23,5 @@ export default defineConfig({
       }
     })
   ],
-  base: '/Servicio-Constitucional/', // para GH Pages
+  base: '/Servicio-Constitucional/', // MUY importante para GH Pages
 })
