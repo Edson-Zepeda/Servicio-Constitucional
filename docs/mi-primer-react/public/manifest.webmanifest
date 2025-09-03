@@ -1,6 +1,6 @@
 {
-  "name": "Servicio Constitucional",
-  "short_name": "Servicio",
+  "name": "Todo List",
+  "short_name": "Todo List",
   "start_url": "/Servicio-Constitucional/",
   "scope": "/Servicio-Constitucional/",
   "display": "standalone",
