@@ -1,56 +1,43 @@
-// docs/sw.js
-const CACHE = 'app-v4';
-const ASSETS = [
-  './',
-  './index.html',
-  './offline.html',
-  './manifest.webmanifest',
-  './img/icon-192.png',
-  './img/icon-512.png'
-];
+const CACHE_NAME = 'pwa-cache-v1';
+const PRECACHE = ['./','./index.html'];
+const SCOPE = new URL(self.registration.scope).pathname;
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(PRECACHE)));
   self.skipWaiting();
 });
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-  );
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k!==CACHE_NAME && caches.delete(k)))));
   self.clients.claim();
 });
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (!url.pathname.startsWith(SCOPE)) return;
 
-self.addEventListener('fetch', (e) => {
-  const req = e.request;
-  const url = new URL(req.url);
-
-  // Ignora terceros (mixpanel, cdns, etc.) para evitar errores y CORS
-  if (url.origin !== self.location.origin) return;
-
-  // Navegación/HTML: network-first con fallback a cache y offline
-  if (req.mode === 'navigate' || req.destination === 'document') {
-    e.respondWith(
-      fetch(req)
-        .then(res => {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(req, copy));
-          return res;
-        })
-        .catch(async () => (await caches.match(req)) || caches.match('./offline.html'))
-    );
+  if (e.request.mode === 'navigate') {
+    e.respondWith((async()=> {
+      try {
+        const fresh = await fetch(e.request);
+        (await caches.open(CACHE_NAME)).put(e.request, fresh.clone());
+        return fresh;
+      } catch {
+        return (await caches.match(e.request)) || caches.match('./index.html');
+      }
+    })());
     return;
   }
 
-  // Assets: cache-first
-  e.respondWith(
-    caches.match(req).then(hit => {
-      if (hit) return hit;
-      return fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(req, copy));
-        return res;
-      }).catch(() => caches.match('./offline.html'));
-    })
-  );
+  if (e.request.method === 'GET') {
+    e.respondWith((async()=> {
+      const cached = await caches.match(e.request);
+      if (cached) return cached;
+      try {
+        const fresh = await fetch(e.request);
+        (await caches.open(CACHE_NAME)).put(e.request, fresh.clone());
+        return fresh;
+      } catch {
+        return caches.match('./index.html');
+      }
+    })());
+  }
 });
