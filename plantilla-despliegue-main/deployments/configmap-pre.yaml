@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: import-changeme-scripts #Change this name here and in the statefulset's yaml, example: name: pifod-mysql-scripts configMap: name: import-pifod-scripts
+  namespace: changeme-pre #NAMESPACE
+data: #Change the password for user password, the password must be the same in the docker file environment variable
+  creatDataBase.sql: |
+    CREATE DATABASE IF NOT EXISTS proyecto;
+    USE proyecto;
+
