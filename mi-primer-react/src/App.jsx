@@ -1,30 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Aplicacion() {
-  const [tareas, setTareas] = useState([
-    {id: 1, texto: "Aprender React", completada: false },
-    { id: 2, texto: "Hacer la lista de tareas", completada: true },
-    { id: 3, texto: "Practicar CSS", completada: false }]);
-function toggleTarea(id) {
-  setTareas(prev =>
-    prev.map(t =>
-      t.id === id ? { ...t, completada: !t.completada } : t
-    )
-  );
-}
-  function removeTarea(id) {
-  setTareas(prev => prev.filter(t => t.id !== id)); 
-}
+  const API = import.meta.env.VITE_API_URL ?? 'http://localhost:8080/proyecto/api_tareas.php';
+
+  const [tareas, setTareas] = useState([]);
   const [nuevaTarea, setNuevaTarea] = useState("");
-  function addTarea() {
+  const [cargando, setCargando] = useState(false);
+
+  const mapFromApi = (row) => ({ id: row.id, texto: row.titulo, completada: !!row.completado });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setCargando(true);
+        const res = await fetch(API);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setTareas(data.map(mapFromApi));
+        }
+      } catch (e) {
+        console.error('Error cargando tareas', e);
+      } finally {
+        setCargando(false);
+      }
+    })();
+  }, [API]);
+
+  async function toggleTarea(id) {
+    const actual = tareas.find(t => t.id === id);
+    if (!actual) return;
+    const nuevoEstado = actual.completada ? 0 : 1;
+    try {
+      await fetch(`${API}?id=${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completado: nuevoEstado })
+      });
+      setTareas(prev => prev.map(t => t.id === id ? { ...t, completada: !t.completada } : t));
+    } catch (e) {
+      console.error('Error actualizando tarea', e);
+    }
+  }
+
+  async function removeTarea(id) {
+    try {
+      await fetch(`${API}?id=${id}`, { method: 'DELETE' });
+      setTareas(prev => prev.filter(t => t.id !== id));
+    } catch (e) {
+      console.error('Error eliminando tarea', e);
+    }
+  }
+
+  async function addTarea() {
     if (nuevaTarea.trim() === "") return;
-    const nueva = {
-      id: Date.now(),
-      texto: nuevaTarea,
-      completada: false
-    };
-    setTareas(prev => [...prev, nueva]);
-    setNuevaTarea("");
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titulo: nuevaTarea, descripcion: null, completado: 0 })
+      });
+      const creado = await res.json();
+      // creado: { id, titulo, descripcion, completado }
+      setTareas(prev => [...prev, mapFromApi(creado)]);
+      setNuevaTarea("");
+    } catch (e) {
+      console.error('Error creando tarea', e);
+    }
   }
   
 

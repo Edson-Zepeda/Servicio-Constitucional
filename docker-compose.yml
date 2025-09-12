@@ -8,7 +8,7 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
-      - 80:80
+      - 8080:80
     #Nombre de la imagen generada con el docker buid  
     image: ${PROJECT_NAME_IMG}
     environment:
@@ -23,7 +23,7 @@ services:
       - PASSD=${MYSQL_PASSWORD}
     volumes:
     # Mapeo de la ruta donde está su proyecto y la ruta mapeada dentro del docker 
-      - .\public-html\:/var/www/${PROJECT_NAME}/
+      - ./public-html/:/var/www/${PROJECT_NAME}/
     depends_on:
       - mysql
 
