@@ -35,7 +35,7 @@ const Login = () => {
     <div className="login-screen">
       <section className="login-panel">
         <div className="login-copy">
-          <p className="login-kicker">SSC · Proyecto final</p>
+          <p className="login-kicker">SSC | Proyecto final</p>
           <h1>Acceso al portal de publicaciones</h1>
           <p>
             Inicia sesion para entrar al catalogo normal o a la consola de

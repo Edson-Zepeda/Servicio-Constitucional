@@ -7,8 +7,9 @@ import process from 'node:process'
 import { chromium } from 'playwright'
 
 const projectRoot = process.cwd()
-const phpPath = 'C:\\xampp\\php\\php.exe'
+const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm'
 const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+const staticServerScript = path.join(projectRoot, 'scripts', 'serve-dist.mjs')
 const outputDir = path.join(projectRoot, 'artifacts', 'demo')
 const rawVideoDir = path.join(outputDir, 'raw')
 
@@ -114,31 +115,29 @@ const clearStorageAndReload = async (page, baseUrl) => {
 }
 
 const recordDemo = async () => {
-  if (!existsSync(phpPath)) {
-    throw new Error(`No se encontro PHP en ${phpPath}`)
-  }
-
   if (!existsSync(chromePath)) {
-    throw new Error(`No se encontro Chrome en ${chromePath}`)
+    logStep('Chrome local no encontrado. Se usara el navegador administrado por Playwright.')
   }
 
   await rm(outputDir, { recursive: true, force: true })
   await mkdir(rawVideoDir, { recursive: true })
+  logStep('Generando build de produccion')
+  execFileSync(npmCommand, ['run', 'build'], {
+    cwd: projectRoot,
+    stdio: 'inherit',
+  })
 
   const port = await getFreePort()
   const baseUrl = `http://127.0.0.1:${port}`
-  const server = spawn(phpPath, ['-S', `127.0.0.1:${port}`, 'router.php'], {
+  const server = spawn(process.execPath, [staticServerScript], {
     cwd: projectRoot,
     stdio: ['ignore', 'pipe', 'pipe'],
+    env: {
+      ...process.env,
+      HOST: '127.0.0.1',
+      PORT: String(port),
+    },
     windowsHide: true,
-  })
-
-  let serverLogs = ''
-  server.stdout.on('data', (chunk) => {
-    serverLogs += chunk.toString()
-  })
-  server.stderr.on('data', (chunk) => {
-    serverLogs += chunk.toString()
   })
 
   try {
@@ -146,10 +145,10 @@ const recordDemo = async () => {
     logStep(`Servidor listo en ${baseUrl}`)
 
     const browser = await chromium.launch({
-      executablePath: chromePath,
       headless: true,
       slowMo: 220,
       args: ['--window-size=1440,900'],
+      ...(existsSync(chromePath) ? { executablePath: chromePath } : {}),
     })
 
     const context = await browser.newContext({

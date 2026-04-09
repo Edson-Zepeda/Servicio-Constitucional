@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="navbar-custom">
       <div className="navbar-brand">
         <div>
-          <p>SSC · Publicaciones</p>
+          <p>SSC | Publicaciones</p>
           <h2>Portal institucional</h2>
         </div>
       </div>

@@ -28,7 +28,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <span>Universidad de Colima · {new Date().getFullYear()}</span>
+        <span>Universidad de Colima | {new Date().getFullYear()}</span>
         <span>Sistema local de demostracion con persistencia en navegador</span>
       </div>
     </footer>

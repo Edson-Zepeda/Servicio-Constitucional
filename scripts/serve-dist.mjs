@@ -20,6 +20,11 @@ const mimeTypes = {
   '.woff2': 'font/woff2',
 }
 
+if (!existsSync(root)) {
+  console.error('No se encontro la carpeta dist. Ejecuta "npm run build" antes de servirla.')
+  process.exit(1)
+}
+
 const resolveRequestPath = (url = '/') => {
   const decodedPath = decodeURIComponent(url.split('?')[0] || '/')
   const safePath = normalize(decodedPath).replace(/^(\.\.[/\\])+/, '')
