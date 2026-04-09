@@ -1,0 +1,52 @@
+.publications-table-wrapper {
+  overflow: auto;
+  padding: 0.25rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: var(--border-soft);
+  box-shadow: var(--shadow-md);
+}
+
+.publications-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.publications-table th,
+.publications-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(22, 50, 79, 0.08);
+  vertical-align: top;
+}
+
+.publications-table th {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-700);
+}
+
+.table-title {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.table-title span {
+  color: var(--ink-700);
+}
+
+.publication-published {
+  color: var(--success);
+  background: rgba(84, 122, 82, 0.12);
+}
+
+.publication-draft {
+  color: var(--ink-900);
+  background: rgba(22, 50, 79, 0.08);
+}
+
+.publication-archived {
+  color: var(--danger);
+  background: rgba(169, 72, 66, 0.1);
+}

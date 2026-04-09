@@ -1,0 +1,52 @@
+.users-table-wrapper {
+  overflow: auto;
+  padding: 0.25rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: var(--border-soft);
+  box-shadow: var(--shadow-md);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(22, 50, 79, 0.08);
+}
+
+.users-table th {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-700);
+}
+
+.users-table td span {
+  display: block;
+}
+
+.user-status-active {
+  color: var(--success);
+  background: rgba(84, 122, 82, 0.12);
+}
+
+.user-status-inactive {
+  color: var(--danger);
+  background: rgba(169, 72, 66, 0.1);
+}
+
+.user-role-admin {
+  color: var(--ink-900);
+  background: rgba(215, 179, 106, 0.16);
+}
+
+.user-role-normal {
+  color: var(--ink-700);
+  background: rgba(216, 230, 210, 0.4);
+}

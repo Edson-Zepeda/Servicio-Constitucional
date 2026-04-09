@@ -1,0 +1,59 @@
+.hero-header {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(215, 179, 106, 0.22), transparent 32%),
+    linear-gradient(135deg, rgba(22, 50, 79, 0.98), rgba(53, 82, 111, 0.96));
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-copy {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.2rem, 4vw, 4rem);
+}
+
+.hero-copy p:last-child {
+  max-width: 58ch;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-kicker {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.hero-stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-stats article {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.hero-stats strong {
+  font-size: 2rem;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.hero-stats span {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+@media (max-width: 900px) {
+  .hero-header {
+    grid-template-columns: 1fr;
+  }
+}
